@@ -46,7 +46,7 @@ export class ImageSourceSVG implements svg.ImageSourceSVG {
             var identifier: number = res.getIdentifier(name, 'drawable', utils.ad.getApplication().getPackageName());
             if (0 < identifier) {
                 // Load SVG
-                this.nativeView = new com.larvalabs.svgandroid.SVGParser.getSVGFromResource(res, identifier);
+                this.nativeView = new com.caverock.androidsvg.SVG.getFromResource(res, identifier);
             }
         }
 
@@ -67,7 +67,7 @@ export class ImageSourceSVG implements svg.ImageSourceSVG {
             fileName = fs.path.join(fs.knownFolders.currentApp().path, fileName.replace("~/", ""));
         }
 
-        this.nativeView = new com.larvalabs.svgandroid.SVGParser.getSVGFromInputStream(new java.io.FileInputStream(new java.io.File(fileName)));
+        this.nativeView = new com.caverock.androidsvg.SVG.getFromInputStream(new java.io.FileInputStream(new java.io.File(fileName)));
         return this.nativeView != null;
     }
 
@@ -78,7 +78,7 @@ export class ImageSourceSVG implements svg.ImageSourceSVG {
     }
 
     public loadFromData(data: any): boolean {
-        this.nativeView = new com.larvalabs.svgandroid.SVGParser.getSVGFromString(data);
+        this.nativeView = new com.caverock.androidsvg.SVG.getFromString(data);
         return this.nativeView != null;
     }
 
@@ -90,7 +90,7 @@ export class ImageSourceSVG implements svg.ImageSourceSVG {
 
     public loadFromBase64(source: string): boolean {
         var bytes = android.util.Base64.decode(source, android.util.Base64.DEFAULT);
-        this.nativeView = new com.larvalabs.svgandroid.SVGParser.getSVGFromString(new java.lang.String(bytes));
+        this.nativeView = new com.caverock.androidsvg.SVG.getFromString(new java.lang.String(bytes));
         return this.nativeView != null;
     }
 
@@ -104,7 +104,7 @@ export class ImageSourceSVG implements svg.ImageSourceSVG {
     public loadFromUrl(url: string): boolean {
         ensureHttp();
         var result = http.getString(url);
-        return this.setNativeSource(new com.larvalabs.svgandroid.SVGParser.getSVGFromString(result));
+        return this.setNativeSource(new com.caverock.androidsvg.SVG.getFromString(result));
         //var httpUrl = new java.net.URL(url);
         //var urlConnection = httpUrl.openConnection();
         //return this.setNativeSource(new com.larvalabs.svgandroid.SVGParser.getSVGFromInputStream(urlConnection.getInputStream()));
