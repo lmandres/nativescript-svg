@@ -159,11 +159,11 @@ export class SVGImage extends common.SVGImage {
     }
 
     public createNativeView() {
-        return new org.nativescript.widgets.ImageView(this._context);
+        return new com.caverock.androidsvg.SVGImageView(this._context);
     }
 
     public _setNativeImage(nativeImage: any) {
-        this._drawable = nativeImage.nativeView.createPictureDrawable();
+	this._drawable = new android.graphics.drawable.PictureDrawable(nativeImage.nativeView.renderToPicture());
         this.nativeView.setLayerType(android.view.View.LAYER_TYPE_SOFTWARE, null);
         this.nativeView.setImageDrawable(this._drawable);
     }

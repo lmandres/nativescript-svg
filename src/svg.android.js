@@ -31,7 +31,7 @@ var ImageSourceSVG = (function () {
         if (res) {
             var identifier = res.getIdentifier(name, 'drawable', utils.ad.getApplication().getPackageName());
             if (0 < identifier) {
-                this.nativeView = new com.larvalabs.svgandroid.SVGParser.getSVGFromResource(res, identifier);
+                this.nativeView = new com.caverock.androidsvg.SVG.getFromResource(res, identifier);
             }
         }
         return this.nativeView != null;
@@ -48,7 +48,7 @@ var ImageSourceSVG = (function () {
         if (fileName.indexOf("~/") === 0) {
             fileName = fs.path.join(fs.knownFolders.currentApp().path, fileName.replace("~/", ""));
         }
-        this.nativeView = new com.larvalabs.svgandroid.SVGParser.getSVGFromInputStream(new java.io.FileInputStream(new java.io.File(fileName)));
+        this.nativeView = new com.caverock.androidsvg.SVG.getFromInputStream(new java.io.FileInputStream(new java.io.File(fileName)));
         return this.nativeView != null;
     };
     ImageSourceSVG.prototype.fromFile = function (path) {
@@ -58,7 +58,7 @@ var ImageSourceSVG = (function () {
         });
     };
     ImageSourceSVG.prototype.loadFromData = function (data) {
-        this.nativeView = new com.larvalabs.svgandroid.SVGParser.getSVGFromString(data);
+        this.nativeView = new com.caverock.androidsvg.SVG.getFromString(data);
         return this.nativeView != null;
     };
     ImageSourceSVG.prototype.fromData = function (data) {
@@ -69,7 +69,7 @@ var ImageSourceSVG = (function () {
     };
     ImageSourceSVG.prototype.loadFromBase64 = function (source) {
         var bytes = android.util.Base64.decode(source, android.util.Base64.DEFAULT);
-        this.nativeView = new com.larvalabs.svgandroid.SVGParser.getSVGFromString(new java.lang.String(bytes));
+        this.nativeView = new com.caverock.androidsvg.SVG.getFromString(new java.lang.String(bytes));
         return this.nativeView != null;
     };
     ImageSourceSVG.prototype.fromBase64 = function (data) {
@@ -81,7 +81,7 @@ var ImageSourceSVG = (function () {
     ImageSourceSVG.prototype.loadFromUrl = function (url) {
         ensureHttp();
         var result = http.getString(url);
-        return this.setNativeSource(new com.larvalabs.svgandroid.SVGParser.getSVGFromString(result));
+        return this.setNativeSource(new com.caverock.androidsvg.SVG.getFromString(result));
     };
     ImageSourceSVG.prototype.fromUrl = function (url) {
         var _this = this;
@@ -132,10 +132,10 @@ var SVGImage = (function (_super) {
         return _super.call(this) || this;
     }
     SVGImage.prototype.createNativeView = function () {
-        return new org.nativescript.widgets.ImageView(this._context);
+        return new com.caverock.androidsvg.SVGImageView(this._context);
     };
     SVGImage.prototype._setNativeImage = function (nativeImage) {
-        this._drawable = nativeImage.nativeView.createPictureDrawable();
+        this._drawable = new android.graphics.drawable.PictureDrawable(nativeImage.nativeView.renderToPicture());
         this.nativeView.setLayerType(android.view.View.LAYER_TYPE_SOFTWARE, null);
         this.nativeView.setImageDrawable(this._drawable);
     };
